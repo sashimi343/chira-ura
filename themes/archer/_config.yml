@@ -1,0 +1,112 @@
+# ========== Profile ========== #
+# avatar
+avatar: /avatar/sashimi.jpg
+# author name
+author: Kohei Kakimoto
+# signature
+signature: sashimi
+# SNS
+social:
+  email: 'naige.1028@gmail.com'
+  github: //github.com/sashimi343
+  # wechat and qq should be a path of qr-code image
+  wechat: 
+  qq: 
+  weibo: 
+  zhihu: 
+  douban: 
+  facebook: 
+  twitter: //twitter.com/sashim1343
+  instagram: 
+  stack-overflow: 
+  v2ex: 
+  bilibili: 
+  linkedin: 
+  others: //13fish.xxxxxxxx.jp
+  rss: 
+# friends
+#friends:
+#  friendA: 
+#  friendB: 
+#  friendC: 
+about:
+  enable: true
+  image: '/background.png'
+
+# ========== Site ========== #
+# title of the site
+SEO_title: chira-ura.html
+# main title
+main_title: chira-ura.html
+# subtitle
+subtitle: 魚介系エンジニアのメモ書き
+# site haeder image
+site_header_image: '/background.png'
+# post haeder image
+post_header_image: '/background.png'
+# 404 image
+_404_image: '/background.png'
+
+# ========== Search ========== #
+algolia_search:
+  enable: false
+  hits:
+    per_page: 10
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We did not find any results for the search: ${query}"
+    hits_stats: "${hits} results found in ${time} ms"
+
+# ========== Comment ========== #
+# Fill in the field to enable the corresponding comment plugin
+# If you want to add other comment plugin, edit in "custom.ejs"
+comment:
+  # Livere  site: https://livere.com/
+  livere_uid: 
+  # Disqus  site: https://disqus.com/
+  disqus_shortname: 
+  # Changyan  site: http://changyan.kuaizhan.com/
+  changyan_appid: 
+  changyan_conf: 
+  # Gitment  site: https://github.com/imsun/gitment
+  gitment_owner: 
+  gitment_repo: 
+  gitment_client_id: 
+  gitment_client_secret: 
+  # Youyan  site: http://www.uyan.cc/
+  youyan_uid: 
+
+# ========== Analytics ========== #
+# enable Busuanzi analytics
+busuanzi: false
+# fill in pv or uv
+busuanzi_pv_or_uv: 'pv'
+# custom analytic slogan, '${count}' is the analytic number, DO NOT modify it.
+busuanzi_slug: 'PV: ${count} :)'
+# Baidu analytics
+baidu_analytics: 
+# Google analytics
+google_analytics: 
+# CNZZ analytics
+CNZZ_analytics: 
+
+# ========== Others ========== #
+# favicon
+#favicon: /assets/favicon.ico
+# truncate length of abstracts in index page (the default is 300, there will be no abstruct if you input 0)
+truncate_length: 
+# enable toc
+toc: true
+# word count & reading time
+reading_info: true
+# intro height (the default is 50 percents of the screen, you can input other number)
+index_intro_height: 50
+post_intro_height: 50
+about_intro_height: 50
+# copyright
+copyright:
+  enable: true
+  author: Kohei Kakimoto
+  # https://creativecommons.org/
+  license: 'Copyright (c) 2018 Kohei Kakimoto'
+timezone: Asia/Tokyo
