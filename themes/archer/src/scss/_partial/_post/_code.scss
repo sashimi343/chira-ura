@@ -17,7 +17,7 @@
     .highlight .gutter pre,
     .highlight .gutter pre .line,
     .gist .gist-file .gist-data .line-numbers {
-        color: #666;
+        color: #444;
     }
     pre,
     code {
@@ -40,7 +40,7 @@
         background: none;
         text-shadow: none;
         padding: 0;
-        color: #657b83;
+        color: #655b43;
     }
     .highlight {
         border-radius: 4px;
@@ -82,20 +82,20 @@
         text-shadow: none;
     }
     .highlight .line {
-        color: #657b83;
+        color: #655b43;
         min-height: 19px;
     }
     
     // ========== light color ========== //
     .highlight,
     pre {
-        background: #fdf6e3;
-        color:#657b83;
+        background: #f0f0ef;
+        color:#655b43;
     }
     .highlight {
         pre .comment,
         pre .quote {
-            color: #93a1a1;
+            color: #838171;
         }
 
         /* Solarized Green */
@@ -103,7 +103,7 @@
         pre .keyword,
         pre .selector-tag,
         pre .addition {
-            color: #859900;
+            color: #758900;
         }
 
         /* Solarized Cyan */
@@ -114,7 +114,7 @@
         pre .literal,
         pre .doctag,
         pre .regexp {
-            color: #2aa198;
+            color: #1a9188;
         }
 
         /* Solarized Blue */
@@ -124,7 +124,7 @@
         pre .name,
         pre .selector-id,
         pre .selector-class {
-            color: #268bd2;
+            color: #167bc2;
         }
 
         /* Solarized Yellow */
@@ -135,7 +135,7 @@
         pre .template-variable,
         pre .class .title,
         pre .type {
-            color: #b58900;
+            color: #a57900;
         }
 
         /* Solarized Orange */
@@ -148,18 +148,18 @@
         pre .selector-attr,
         pre .selector-pseudo,
         pre .link {
-            color: #cb4b16;
+            color: #bb3b06;
         }
 
         /* Solarized Red */
 
         pre .built_in,
         pre .deletion {
-            color: #dc322f;
+            color: #cc221f;
         }
 
         pre .formula {
-            background: #eee8d5;
+            background: #ded8c5;
         }
 
         pre .emphasis {

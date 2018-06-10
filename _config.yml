@@ -4,8 +4,8 @@
 
 # Site
 title: chira-ura.html
-subtitle: 魚介系エンジニアのメモ書き
-description: プログラミングとかセキュリティとかネットワークとかサーバとかどーでもいい日常とかを綴る予定
+subtitle: プログラミングとかセキュリティとかネットワークとかサーバとかどーでもいい日常とかを綴る予定
+description: 山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。
 keywords: 
 author: Kohei Kakimoto
 language: en
@@ -15,7 +15,7 @@ timezone: Asia/Tokyo
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://sashimi343.github.io/chira-ura
 root: /chira-ura/
-permalink: :category/:title/
+permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
