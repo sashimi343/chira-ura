@@ -57,6 +57,7 @@ index_generator:
 default_category: misc
 category_map:
 tag_map:
+  - service_layer: サービス層
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

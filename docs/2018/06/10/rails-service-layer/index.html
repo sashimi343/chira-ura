@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Kohei Kakimoto">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Kohei Kakimoto">
+    <meta name="keywords" content="chira-ura.html | Kohei Kakimoto">
+    <meta name="description" content="山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き) · chira-ura.html</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/chira-ura/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /chira-ura/css/style.css?v=20180604 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /chira-ura/css/mobile.css?v=20180604 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/chira-ura/" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/chira-ura/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/chira-ura/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/chira-ura/" >chira-ura.html</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/chira-ura/>chira-ura.html</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/chira-ura/background.png)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby">ruby</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby-on-rails">ruby-on-rails</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">779</span> / Reading time: <span class="post-count">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/06/10</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/chira-ura/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/chira-ura/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><ul>
+<li>Railsアプリにサービス層を導入したいんだけど、Trailblazerとか使うほどでもないんだよなぁ、という人（主に自分）向け</li>
+<li>素のRailsアプリに自作サービス層を導入してみた</li>
+<li>ついでに<code>rails generate service hoge</code>みたいなジェネレータも作成してみた</li>
+</ul>
+<h1 id="経緯"><a href="#経緯" class="headerlink" title="経緯"></a>経緯</h1><p>既存のRailsアプリ（APIサーバ）にサービス層を導入しよう！と思い立ったものの、<br>Trailblazer等のgemを導入すると大掛かりな改修が必要になるため、少々敷居が高いと感じました。<br>そこで、既存プロジェクトにgemを追加せず、最低限の機能を持ったコンパクトなサービス層を自作して導入しようと考えました。</p>
+<h1 id="要件（サービス層に求めていたこと）"><a href="#要件（サービス層に求めていたこと）" class="headerlink" title="要件（サービス層に求めていたこと）"></a>要件（サービス層に求めていたこと）</h1><ul>
+<li><strong>既存のRailsプロジェクトにgemを追加せずに導入できること</strong></li>
+<li><code>rails generate service sample</code>のように、ジェネレータを用いてファイルを作成できること</li>
+<li>1機能 1クラスのコンパクトなサービスクラス</li>
+<li>パラメータのバリデーションを行い、異常があれば例外を投げる（既存コードと同様のエラー処理を行うため）</li>
+</ul>
+<h1 id="方針"><a href="#方針" class="headerlink" title="方針"></a>方針</h1><ul>
+<li><code>ActiveModel::Model</code>をincludeしたクラス（フォームオブジェクトのようなもの）を作成する</li>
+<li>処理実行前のバリデーション実行を強制し、パラメータが正常な場合のみ処理を行うようにする</li>
+<li>バリデーションエラー時には<code>ActiveRecord::RecordInvalid</code>例外を投げる</li>
+<li><code>rails generate generator</code>を使用し、ジェネレータを生成する</li>
+<li>パラメータはコンストラクタ経由で渡す（個人的な好みです）</li>
+</ul>
+<h1 id="ソースコード"><a href="#ソースコード" class="headerlink" title="ソースコード"></a>ソースコード</h1><h2 id="app-services-base-service-rb"><a href="#app-services-base-service-rb" class="headerlink" title="app/services/base_service.rb"></a>app/services/base_service.rb</h2><p>すべてのサービスクラスの親クラスです。<br>ポイントは、</p>
+<ul>
+<li><code>ActiveModel::Model</code>をincludeし、パラメータのバリデーション機能を使用可能にする</li>
+<li>処理実行前に必ずバリデーションを経由させる</li>
+</ul>
+<p>の2点です。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseService</span></span></span><br><span class="line">  <span class="keyword">include</span> ActiveModel::Model</span><br><span class="line"></span><br><span class="line">  <span class="comment"># サービスを利用するクラスが呼び出すメソッド</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">provide</span><span class="params">()</span></span></span><br><span class="line">    raise_validation_error <span class="keyword">if</span> invalid?</span><br><span class="line">    perform</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  private</span><br><span class="line"></span><br><span class="line">  <span class="comment"># サービスの処理（パラメータが正常な場合のみ実行されます）</span></span><br><span class="line">  <span class="comment"># 各サービスクラスではこのメソッドをoverrideして機能を実装します</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">perform</span><span class="params">()</span></span></span><br><span class="line">    raise NotImplementedError.new(<span class="string">"You must implement <span class="subst">#&#123;<span class="keyword">self</span>.<span class="keyword">class</span>&#125;</span>#<span class="subst">#&#123;__method_<span class="number">_</span>&#125;</span>"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># バリデーションエラー時、ActiveRecord::RecordInvalidを投げるためのメソッド</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">raise_validation_error</span><span class="params">()</span></span></span><br><span class="line">    raise ActiveRecord::RecordInvalid.new(<span class="keyword">self</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="app-services-sample-service-rb"><a href="#app-services-sample-service-rb" class="headerlink" title="app/services/sample_service.rb"></a>app/services/sample_service.rb</h2><p>個々のサービスクラスは、上記の<code>BaseService</code>クラスを継承して作成します。<br>パラメータはコンストラクタ内でインスタンス変数にセットし、処理本体は<code>perform()</code>メソッド内に実装します。<br>また、必要に応じてバリデーションのためのコードを記述します。</p>
+<p>（コードの雛形は後述するジェネレータで自動生成します）</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SampleService</span> &lt; BaseService</span></span><br><span class="line">  <span class="comment"># パラメータ一覧</span></span><br><span class="line">  <span class="keyword">attr_accessor</span> <span class="symbol">:username</span>, <span class="symbol">:password</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># バリデーション</span></span><br><span class="line">  validates <span class="symbol">:username</span>, <span class="symbol">presence:</span> <span class="literal">true</span></span><br><span class="line">  validates <span class="symbol">:password</span>, <span class="symbol">presence:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># パラメータはコンストラクタで渡す</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(username, password)</span></span></span><br><span class="line">    @username = username</span><br><span class="line">    @password = password</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  private</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 処理本体（パラメータが正常な場合のみ実行されます）</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">perform</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment"># ここに処理を記述します</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="ジェネレータ"><a href="#ジェネレータ" class="headerlink" title="ジェネレータ"></a>ジェネレータ</h2><p>ジェネレータは下記のコマンドで追加できます。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rails generate generator service</span><br></pre></td></tr></table></figure></p>
+<p>コマンド実行後、<code>lib/generators/service</code>が作成されるので、ジェネレータのコードを編集します。<br>ジェネレータクラスにあるすべてのインスタンスメソッドが（書いた順番に）実行されます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceGenerator</span> &lt; Rails::Generators::<span class="title">NamedBase</span></span></span><br><span class="line">  source_root File.expand_path(<span class="string">'../templates'</span>, __FILE_<span class="number">_</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># パラメータを定義</span></span><br><span class="line">  argument <span class="symbol">:name</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># サービスクラスを作成する</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">create_service_file</span></span></span><br><span class="line">    destination = Rails.root.join(<span class="string">"app/services/<span class="subst">#&#123;name.underscore&#125;</span>_service.rb"</span>)</span><br><span class="line">    template(<span class="string">'service.rb.erb'</span>, destination)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># サービスクラスのテストクラスを作成する</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">create_test_file</span></span></span><br><span class="line">    destination = Rails.root.join(<span class="string">"test/services/<span class="subst">#&#123;name.underscore&#125;</span>_service_test.rb"</span>)</span><br><span class="line">    template(<span class="string">'test.rb.erb'</span>, destination)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>また、サービスクラスとそのテストクラスのテンプレートは下記の通りです。</p>
+<h3 id="サービスクラスのテンプレート"><a href="#サービスクラスのテンプレート" class="headerlink" title="サービスクラスのテンプレート"></a>サービスクラスのテンプレート</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class &lt;%= name.camelize %&gt;Service &lt; BaseService</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment"># Set parameters...</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  private</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">perform</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment"># Run this method if parameters are valid</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="テストクラスのテンプレート"><a href="#テストクラスのテンプレート" class="headerlink" title="テストクラスのテンプレート"></a>テストクラスのテンプレート</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'test_helper'</span></span><br><span class="line"></span><br><span class="line">class &lt;%= name.camelize %&gt;ServiceTest &lt; ActiveSupport::TestCase</span><br><span class="line">  <span class="comment"># test "the truth" do</span></span><br><span class="line">  <span class="comment">#   assert true</span></span><br><span class="line">  <span class="comment"># end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h1><h2 id="サービスクラス作成"><a href="#サービスクラス作成" class="headerlink" title="サービスクラス作成"></a>サービスクラス作成</h2><p>下記のコマンドを実行します</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rails generate service sample</span><br></pre></td></tr></table></figure>
+<p>実行後、<code>app/services/sample_service.rb</code>と<code>test/services/sample_service_test.rb</code>が作成されますので、<br>適宜修正してください。</p>
+<h2 id="controllerからの呼び出し"><a href="#controllerからの呼び出し" class="headerlink" title="controllerからの呼び出し"></a>controllerからの呼び出し</h2><p>前述のように、パラメータはコンストラクタの引数として渡します。<br>また、<code>provide()</code>メソッドを呼び出すことで、処理実行前に自動でバリデーションが行われます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service = SampleService.new(<span class="string">'myuser'</span>, <span class="string">'mypassword'</span>)</span><br><span class="line">result = service.provide</span><br></pre></td></tr></table></figure>
+<h1 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h1><p><code>ActiveModel::Model</code>を利用し、コンパクトなサービス層の導入を実現しました。<br>また、ジェネレータも用意し、簡単にサービスクラスを追加できるようにしました。</p>
+<p>今回作成したコードはかなり単純なものなので、もう少し改良してからgemにできたらと思います。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://github.com/trailblazer/trailblazer" target="_blank" rel="noopener">trailblazer/trailblazer: A High-Level Architecture for Ruby.</a><br><a href="http://qiita.com/joooee0000/items/369fd4676cd9dfb1f6eb" target="_blank" rel="noopener">Rails：Service層を運用して良かったところ、悪かったところ - Qiita</a><br><a href="http://qiita.com/kbaba1001/items/e265ad1e40f238931468" target="_blank" rel="noopener">Rails のアーキテクチャ設計を考える - Qiita</a><br><a href="http://mgi.hatenablog.com/entry/2014/11/29/124429" target="_blank" rel="noopener">rails でカスタム generator 作る話 - scramble cadenza</a><br><a href="https://github.com/erikhuda/thor" target="_blank" rel="noopener">erikhuda/thor: Thor is a toolkit for building powerful command-line interfaces.</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://sashimi343.github.io/chira-ura">Kohei Kakimoto</a>
+            <p>URL: <a href="https://sashimi343.github.io/chira-ura/2018/06/10/rails-service-layer/">https://sashimi343.github.io/chira-ura/2018/06/10/rails-service-layer/</a>
+            <p>Published at: <a href="https://sashimi343.github.io/chira-ura/2018/06/10/rails-service-layer/">2018-06-10(Sun) 16:43:55</a>
+            <p>License: Copyright (c) 2018 Kohei Kakimoto</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/chira-ura/2018/06/10/js-single-double-click/" title= JavaScript シングル/ダブルクリックイベントを両方取得する >
+                    <div class="prevTitle">JavaScript シングル/ダブルクリックイベントを両方取得する</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:naige.1028@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/sashimi343" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//twitter.com/sashim1343" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//13fish.xxxxxxxx.jp" class="iconfont-archer others" target="_blank" title=others></a>
+            
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TL-DR"><span class="toc-number">1.</span> <span class="toc-text">TL;DR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#経緯"><span class="toc-number">2.</span> <span class="toc-text">経緯</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#要件（サービス層に求めていたこと）"><span class="toc-number">3.</span> <span class="toc-text">要件（サービス層に求めていたこと）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方針"><span class="toc-number">4.</span> <span class="toc-text">方針</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ソースコード"><span class="toc-number">5.</span> <span class="toc-text">ソースコード</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#app-services-base-service-rb"><span class="toc-number">5.1.</span> <span class="toc-text">app/services/base_service.rb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-services-sample-service-rb"><span class="toc-number">5.2.</span> <span class="toc-text">app/services/sample_service.rb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ジェネレータ"><span class="toc-number">5.3.</span> <span class="toc-text">ジェネレータ</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#サービスクラスのテンプレート"><span class="toc-number">5.3.1.</span> <span class="toc-text">サービスクラスのテンプレート</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#テストクラスのテンプレート"><span class="toc-number">5.3.2.</span> <span class="toc-text">テストクラスのテンプレート</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使い方"><span class="toc-number">6.</span> <span class="toc-text">使い方</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#サービスクラス作成"><span class="toc-number">6.1.</span> <span class="toc-text">サービスクラス作成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controllerからの呼び出し"><span class="toc-number">6.2.</span> <span class="toc-text">controllerからの呼び出し</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#まとめ"><span class="toc-number">7.</span> <span class="toc-text">まとめ</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 3
+        <!-- search  -->
+        </div>
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/rails-service-layer/" >[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/js-single-double-click/" >JavaScript シングル/ダブルクリックイベントを両方取得する</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/09</span><a class="archive-post-title" href= "/chira-ura/2018/06/09/hello-hexo/" >技術メモはじめました</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="javascript"><span class="iconfont-archer">&#xe606;</span>javascript</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby"><span class="iconfont-archer">&#xe606;</span>ruby</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby-on-rails"><span class="iconfont-archer">&#xe606;</span>ruby-on-rails</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="programming"><span class="iconfont-archer">&#xe60a;</span>programming</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/chira-ura/",
+        author: "Kohei Kakimoto"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/chira-ura/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/chira-ura/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/chira-ura/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

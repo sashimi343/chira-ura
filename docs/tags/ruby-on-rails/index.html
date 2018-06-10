@@ -337,31 +337,30 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/09/hello-hexo/" >
+        <a class="abstract-title" href = "/chira-ura/2018/06/10/rails-service-layer/" >
             
-                <span>技術メモはじめました</span>
+                <span>[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</span>
         </a>
         <div class="abstract-content">
-            技術系ネタのメモ書き場所として、ブログっぽいものを作ってみました。今までは某プログラマの技術情報共有サービスに書いていたのですが、より気軽にポンポン書ける場所が欲しいなーと思い、一念発起してページを立ち上げてみました。
-このサイトの構築についてこのサイトは、Node.js製の静的サイトジェネレータであるHexoとGitHubによる静的サイトホスティングサービスGitHub Pagesを組み合わせて構築しています。サイト公開までの手順はだいたいこんな感じ。
+            TL;DR
+Railsアプリにサービス層を導入したいんだけど、Trailblazerとか使うほどでもないんだよなぁ、という人（主に自分）向け
+素のRailsアプリに自作サービス層を導入してみた
+ついでにrails generate service hogeみたいなジェネレータも作成してみた
 
-新規hexoプロジェクト作成
-hexoプロジェクト初期設定
-Markdownで記事を書く
-GitHub Pagesにデプロイ
-
-サー...
+経緯既存のRailsアプリ（APIサーバ）にサービス層を導入しよう！と思い立ったものの、Trailblazer等のgemを導入すると大掛かりな改修が必要になるため、少々敷居が高いと感じました。そこで、既存プロジェクトにgemを追加せず、最低限の機能を持ったコンパクトなサービス層を自作して導入しようと...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/09</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "hexo">hexo</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby">ruby</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby-on-rails">ruby-on-rails</a>
     
 </div>
             
