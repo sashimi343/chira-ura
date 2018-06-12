@@ -4,7 +4,7 @@ avatar: /avatar/sashimi.jpg
 # author name
 author: Kohei Kakimoto
 # signature
-signature: sashimi
+signature: 
 # SNS
 social:
   email: 'naige.1028@gmail.com'
@@ -39,7 +39,7 @@ SEO_title: chira-ura.html
 # main title
 main_title: chira-ura.html
 # subtitle
-subtitle: 魚介系エンジニアのメモ書き
+subtitle: 山奥に生息するWeb寄りSEのブログ
 # site haeder image
 site_header_image: '/background.png'
 # post haeder image
