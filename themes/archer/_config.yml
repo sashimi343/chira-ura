@@ -4,24 +4,24 @@ avatar: /avatar/sashimi.jpg
 # author name
 author: Kohei Kakimoto
 # signature
-signature: sashimi
+signature: 
 # SNS
 social:
   email: 'naige.1028@gmail.com'
   github: //github.com/sashimi343
   # wechat and qq should be a path of qr-code image
-  wechat: 
-  qq: 
-  weibo: 
-  zhihu: 
-  douban: 
+  #wechat: 
+  #qq: 
+  #weibo: 
+  #zhihu: 
+  #douban: 
   facebook: 
   twitter: //twitter.com/sashim1343
   instagram: 
   stack-overflow: 
-  v2ex: 
-  bilibili: 
-  linkedin: 
+  #v2ex: 
+  #bilibili: 
+  #linkedin: 
   others: //13fish.xxxxxxxx.jp
   rss: 
 # friends
@@ -39,7 +39,7 @@ SEO_title: chira-ura.html
 # main title
 main_title: chira-ura.html
 # subtitle
-subtitle: 魚介系エンジニアのメモ書き
+subtitle: 山奥に生息するWeb寄りSEのブログ
 # site haeder image
 site_header_image: '/background.png'
 # post haeder image
@@ -64,7 +64,7 @@ comment:
   # Livere  site: https://livere.com/
   livere_uid: 
   # Disqus  site: https://disqus.com/
-  disqus_shortname: 
+  disqus_shortname: sashim1343
   # Changyan  site: http://changyan.kuaizhan.com/
   changyan_appid: 
   changyan_conf: 

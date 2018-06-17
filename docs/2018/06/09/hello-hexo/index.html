@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Kohei Kakimoto">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Kohei Kakimoto">
+    <meta name="keywords" content="chira-ura.html | Kohei Kakimoto">
+    <meta name="description" content="山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>技術メモはじめました · chira-ura.html</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/chira-ura/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /chira-ura/css/style.css?v=20180604 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /chira-ura/css/mobile.css?v=20180604 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/chira-ura/" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/chira-ura/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/chira-ura/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/chira-ura/" >chira-ura.html</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">技術メモはじめました</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/chira-ura/>chira-ura.html</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/chira-ura/background.png)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            技術メモはじめました
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "hexo">hexo</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">718</span> / Reading time: <span class="post-count">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/06/09</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr" style="display: none">&#xe75b;
+                                <div class="share-qrcode" style="display: none"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo" style="display: none">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone" style="display: none">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/chira-ura/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/chira-ura/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>技術系ネタのメモ書き場所として、ブログっぽいものを作ってみました。<br>今までは某プログラマの技術情報共有サービスに書いていたのですが、<br>より気軽にポンポン書ける場所が欲しいなーと思い、一念発起してページを立ち上げてみました。</p>
+<h1 id="このサイトの構築について"><a href="#このサイトの構築について" class="headerlink" title="このサイトの構築について"></a>このサイトの構築について</h1><p>このサイトは、Node.js製の静的サイトジェネレータである<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>と<br>GitHubによる静的サイトホスティングサービス<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>を組み合わせて構築しています。<br>サイト公開までの手順はだいたいこんな感じ。</p>
+<ol>
+<li>新規hexoプロジェクト作成</li>
+<li>hexoプロジェクト初期設定</li>
+<li>Markdownで記事を書く</li>
+<li>GitHub Pagesにデプロイ</li>
+</ol>
+<p>サーバ構築不要で、使用するツールもGit、Node.js、お好みのテキストエディタ、と<br>かなり手軽にブログっぽいサイトを立ち上げることが可能です。<br>何番煎じか分かりませんが、構築手順をメモとして残します。</p>
+<h1 id="サンプル-このサイトのリポジトリ"><a href="#サンプル-このサイトのリポジトリ" class="headerlink" title="サンプル(このサイトのリポジトリ)"></a>サンプル(このサイトのリポジトリ)</h1><p><a href="https://github.com/sashimi343/chira-ura" target="_blank" rel="noopener">https://github.com/sashimi343/chira-ura</a></p>
+<h1 id="新規hexoプロジェクト作成"><a href="#新規hexoプロジェクト作成" class="headerlink" title="新規hexoプロジェクト作成"></a>新規hexoプロジェクト作成</h1><h2 id="hexoインストール"><a href="#hexoインストール" class="headerlink" title="hexoインストール"></a>hexoインストール</h2><p><strong>前提として、Node.jsとnpmが必要。</strong><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># npm install -g hexo</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="hexoプロジェクト作成"><a href="#hexoプロジェクト作成" class="headerlink" title="hexoプロジェクト作成"></a>hexoプロジェクト作成</h2><p>プロジェクトを作成するディレクトリ(Documents等)で以下のコマンドを実行する。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init my-blog</span><br><span class="line">$ <span class="built_in">cd</span> my-blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<h1 id="hexoプロジェクト初期設定"><a href="#hexoプロジェクト初期設定" class="headerlink" title="hexoプロジェクト初期設定"></a>hexoプロジェクト初期設定</h1><h2 id="config-yml修正"><a href="#config-yml修正" class="headerlink" title="_config.yml修正"></a>_config.yml修正</h2><p>hexoプロジェクトフォルダ(上記の例ではmy-blog)直下の_config.ymlに<br>サイトに関する設定を記載する。<br>私が修正した箇所は下記のとおり。<br>参考: <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Configuration | Hexo</a></p>
+<ul>
+<li>title: サイトのタイトル</li>
+<li>subtitle: サイトのサブタイトル</li>
+<li>description: サイトの説明文</li>
+<li>author: 作成者名</li>
+<li>language: サイトの言語設定。後述するテーマがこの値を使用する。<code>en</code>(英語)に設定</li>
+<li>timezone: タイムゾーンの設定。空欄でも良いらしいが念のため<code>Asia/Tokyo</code>に設定</li>
+<li>url: サイトのURL。GitHub Pagesにデプロイする場合、<code>https://GitHubユーザ名.github.io/リポジトリ名</code></li>
+<li>root: コメントにも書いてあるとおり、サブディレクトリ名の設定が必要。今回はリポジトリ名</li>
+<li>permalink: 各記事のpermalinkのフォーマット。私は<code>:category/:title/</code>とした。使用可能なパラメータは<a href="https://hexo.io/docs/permalinks.html" target="_blank" rel="noopener">Permalinks | Hexo</a>あたりを参照</li>
+<li>public_dir: ビルドされた静的コンテンツが格納されるフォルダ。後述するGitHub Pagesとの兼ね合いで、デフォルトの<code>public</code>から<code>docs</code>に変更する</li>
+</ul>
+<h2 id="テーマ変更"><a href="#テーマ変更" class="headerlink" title="テーマ変更"></a>テーマ変更</h2><p>Hexoはカスタムテーマをダウンロードまたは作成することで、<br>ページの見た目を簡単にカスタマイズできる。<br>現在公開されているテーマは<a href="https://hexo.io/themes/" target="_blank" rel="noopener">このへん</a>から確認可能。<br>今回は<a href="http://firework.studio/archer-demo/" target="_blank" rel="noopener">Archer</a>を選択してみた。</p>
+<h2 id="カスタムテーマのインストール"><a href="#カスタムテーマのインストール" class="headerlink" title="カスタムテーマのインストール"></a>カスタムテーマのインストール</h2><p>基本的な流れとしては下記の通り。</p>
+<ol>
+<li>themesディレクトリ以下にテーマをclone</li>
+<li>必要に応じてthemes/&lt;テーマ名&gt;/_config.yml等のファイルを編集</li>
+<li>hexoプロジェクトフォルダ直下の_config.ymlを編集し、適用するテーマを変更</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/fi3ework/hexo-theme-archer themes/archer</span><br><span class="line">$ <span class="built_in">cd</span> themes/archer</span><br><span class="line">$ npm i hexo-generator-json-content --save &amp;&amp; npm i --save hexo-wordcount</span><br></pre></td></tr></table></figure>
+<p>npmコマンドでhexoのプラグインを2つインストールしているが、これはarcherテーマのREADME.mdに書かれていたもの。<br>なお、コマンドや修正内容までは載せないが、テーマの_config.ymlとlayouts/post.ejsを編集している。</p>
+<h2 id="gitignore修正"><a href="#gitignore修正" class="headerlink" title=".gitignore修正"></a>.gitignore修正</h2><p>.gitignoreファイルを確認し、<code>docs/</code>が記載されている場合は該当行を削除する。<br>(最終的にこのディレクトリの内容をGitHub Pagesで公開するため)</p>
+<h1 id="Markdownで記事を書く"><a href="#Markdownで記事を書く" class="headerlink" title="Markdownで記事を書く"></a>Markdownで記事を書く</h1><p><code>$ hexo new hello-hexo</code>を実行すると、source/_posts/hello-hexo.mdが作成される。<br>あとはこのhello-hexo.mdを楽しく編集する。</p>
+<p><code>$ hexo server</code>コマンドを実行すると、<code>http://localhost:4000/ルート</code>でサーバが起動し、編集中の内容をブラウザで確認できる。<br>必要に応じて画面表示を確認しながら記事を書き進める。</p>
+<p>一通り書き終えたら、<code>$ hexo generate</code>コマンドで静的ファイルを作成する。</p>
+<h1 id="GitHub-Pagesにデプロイ"><a href="#GitHub-Pagesにデプロイ" class="headerlink" title="GitHub Pagesにデプロイ"></a>GitHub Pagesにデプロイ</h1><p>GitHub上にリポジトリを新規作成し、作成したhexoプロジェクトをGitHubにpushする。<br>その後、GitHub上でリポジトリの設定を変更する。<br>リポジトリのSettings＞Options＞GitHub Pagesから、Sourceを<code>master branch /docs folder</code>に変更する。<br>こうすることで、このリポジトリのdocsフォルダ以下が静的サイトとして公開される。<br>(hexoプロジェクトの設定で静的ファイルの格納ディレクトリ名をdocsにしたのはこのため)</p>
+<p>作成したサイトは<code>https://GitHubユーザ名.github.io/リポジトリ名/</code>にアクセスすることで閲覧できる。</p>
+<h1 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h1><p>Hexoのデプロイコマンドを使わないなど、若干イレギュラー気味な手順ではありますが、<br>この手順でお手軽にブログっぽいサイトを立ち上げることができました。<br>Gitや使い慣れたテキストエディタで作業でき、執筆に集中できるのは大きいですね。</p>
+<p>これからも、空き時間を使ってちまちま情報を増やしていければと思います。</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://sashimi343.github.io/chira-ura">Kohei Kakimoto</a>
+            <p>URL: <a href="https://sashimi343.github.io/chira-ura/2018/06/09/hello-hexo/">https://sashimi343.github.io/chira-ura/2018/06/09/hello-hexo/</a>
+            <p>Published at: <a href="https://sashimi343.github.io/chira-ura/2018/06/09/hello-hexo/">2018-06-09(Sat) 23:49:30</a>
+            <p>License: Copyright (c) 2018 Kohei Kakimoto</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/chira-ura/2018/06/10/js-single-double-click/" title= JavaScript シングル/ダブルクリックイベントを両方取得する >
+                    <div class="nextTitle">JavaScript シングル/ダブルクリックイベントを両方取得する</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+        this.page.url = "https://sashimi343.github.io/chira-ura/2018/06/09/hello-hexo/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "技術メモはじめました"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://sashim1343.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:naige.1028@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/sashimi343" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+            
+                <a href="//twitter.com/sashim1343" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//13fish.xxxxxxxx.jp" class="iconfont-archer others" target="_blank" title=others></a>
+            
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#このサイトの構築について"><span class="toc-number">1.</span> <span class="toc-text">このサイトの構築について</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#サンプル-このサイトのリポジトリ"><span class="toc-number">2.</span> <span class="toc-text">サンプル(このサイトのリポジトリ)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新規hexoプロジェクト作成"><span class="toc-number">3.</span> <span class="toc-text">新規hexoプロジェクト作成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hexoインストール"><span class="toc-number">3.1.</span> <span class="toc-text">hexoインストール</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexoプロジェクト作成"><span class="toc-number">3.2.</span> <span class="toc-text">hexoプロジェクト作成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hexoプロジェクト初期設定"><span class="toc-number">4.</span> <span class="toc-text">hexoプロジェクト初期設定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#config-yml修正"><span class="toc-number">4.1.</span> <span class="toc-text">_config.yml修正</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#テーマ変更"><span class="toc-number">4.2.</span> <span class="toc-text">テーマ変更</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#カスタムテーマのインストール"><span class="toc-number">4.3.</span> <span class="toc-text">カスタムテーマのインストール</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitignore修正"><span class="toc-number">4.4.</span> <span class="toc-text">.gitignore修正</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markdownで記事を書く"><span class="toc-number">5.</span> <span class="toc-text">Markdownで記事を書く</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GitHub-Pagesにデプロイ"><span class="toc-number">6.</span> <span class="toc-text">GitHub Pagesにデプロイ</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#終わりに"><span class="toc-number">7.</span> <span class="toc-text">終わりに</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 4
+        <!-- search  -->
+        </div>
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/chira-ura/2018/06/12/logon-script-show-window/" >[Windows 10]ログオンスクリプトのコマンドウィンドウの前面表示</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/rails-service-layer/" >[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/js-single-double-click/" >JavaScript シングル/ダブルクリックイベントを両方取得する</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/09</span><a class="archive-post-title" href= "/chira-ura/2018/06/09/hello-hexo/" >技術メモはじめました</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="javascript"><span class="iconfont-archer">&#xe606;</span>javascript</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby"><span class="iconfont-archer">&#xe606;</span>ruby</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby-on-rails"><span class="iconfont-archer">&#xe606;</span>ruby-on-rails</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows"><span class="iconfont-archer">&#xe606;</span>windows</span>
+    
+        <span class="sidebar-tag-name" data-tags="logon-script"><span class="iconfont-archer">&#xe606;</span>logon-script</span>
+    
+        <span class="sidebar-tag-name" data-tags="cmd"><span class="iconfont-archer">&#xe606;</span>cmd</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="programming"><span class="iconfont-archer">&#xe60a;</span>programming</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/chira-ura/",
+        author: "Kohei Kakimoto"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/chira-ura/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/chira-ura/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/chira-ura/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

@@ -12,7 +12,7 @@
     <meta name="renderer" content="webkit">
     <meta name="copyright" content="Kohei Kakimoto">
     <meta name="keywords" content="chira-ura.html | Kohei Kakimoto">
-    <meta name="description" content="プログラミングとかセキュリティとかネットワークとかサーバとかどーでもいい日常とかを綴る予定">
+    <meta name="description" content="山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>chira-ura.html</title>
@@ -238,7 +238,7 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                魚介系エンジニアのメモ書き
+                山奥に生息するWeb寄りSEのブログ
             
             <!-- 文章页  -->
             
@@ -247,6 +247,7 @@ height:50vh;
         
     </div>
 </div>
+
         <script>
  
   // get user agent
@@ -352,7 +353,109 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/programming/hello-hexo/" >
+        <a class="abstract-title" href = "/chira-ura/2018/06/12/logon-script-show-window/" >
+            
+                <span>[Windows 10]ログオンスクリプトのコマンドウィンドウの前面表示</span>
+        </a>
+        <div class="abstract-content">
+            Windows 10のログオンスクリプトでバッチファイル(.bat)を実行する際、実行中のコマンドウィンドウを前面に表示する小ネタ。業務で必要に迫られて実装したので、その内容をメモ。
+グループポリシーで設定できないの？グループポリシー管理エディターの「コンピューターの構成」＞「ポリシー」＞「管理用テンプレート」＞「システム」＞「グループポリシー」＞「実行中のログオン スクリプトの命令を表示する」を「有効」にすればできそうな気がしていました。しかし、実際に設定してみると、コマンドウィンドウは表示されるものの、ウィンドウが最小化された状態になってしまいます。
+ならどうする？STARTコマンド...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "windows">windows</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "logon-script">logon-script</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "cmd">cmd</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/chira-ura/2018/06/10/rails-service-layer/" >
+            
+                <span>[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</span>
+        </a>
+        <div class="abstract-content">
+            TL;DR
+Railsアプリにサービス層を導入したいんだけど、Trailblazerとか使うほどでもないんだよなぁ、という人（主に自分）向け
+素のRailsアプリに自作サービス層を導入してみた
+ついでにrails generate service hogeみたいなジェネレータも作成してみた
+
+経緯既存のRailsアプリ（APIサーバ）にサービス層を導入しよう！と思い立ったものの、Trailblazer等のgemを導入すると大掛かりな改修が必要になるため、少々敷居が高いと感じました。そこで、既存プロジェクトにgemを追加せず、最低限の機能を持ったコンパクトなサービス層を自作して導入しようと...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby">ruby</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby-on-rails">ruby-on-rails</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/chira-ura/2018/06/10/js-single-double-click/" >
+            
+                <span>JavaScript シングル/ダブルクリックイベントを両方取得する</span>
+        </a>
+        <div class="abstract-content">
+            とあるプログラムを書いているときに、ある要素をシングルクリックしたときの処理と、ダブルクリックしたときの処理を別々にしたいと思いました。それをスマートに実現する方法がなく、自前で実現したのでその方法をメモ。
+onclickとondblclickを両方登録すればいいのでは？それがそうもいかないのです。イベントの発火順序がシングルクリック→ダブルクリックとなっているようです。そのため、両方登録してもシングルクリックの処理しか行われないみたいです。
+ならどうする？そこで、クリックされた状態を保持するフラグを用意し、クリック後一定時間以内に再度クリックした場合、ダブルクリックと判定します。ごちゃ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "javascript">javascript</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/chira-ura/2018/06/09/hello-hexo/" >
             
                 <span>技術メモはじめました</span>
         </a>
@@ -392,10 +495,6 @@ GitHub Pagesにデプロイ
     <img class="profile-avatar" src= /chira-ura/avatar/sashimi.jpg >
     <div class="profile-name">Kohei Kakimoto</div>
     
-    <div class="profile-signature">
-        sashimi
-    </div>
-    
     
     <div class="profile-social">
         
@@ -415,25 +514,9 @@ GitHub Pagesにデプロイ
         
     
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
             
                 <a href="//twitter.com/sashim1343" class="iconfont-archer twitter" target="_blank" title=twitter></a>
             
-        
-    
-        
-    
-        
-    
         
     
         
@@ -481,25 +564,9 @@ GitHub Pagesにデプロイ
         
     
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
             
                 <a href="//twitter.com/sashim1343" class="iconfont-archer twitter" target="_blank" title=twitter></a>
             
-        
-    
-        
-    
-        
-    
         
     
         
@@ -548,9 +615,36 @@ GitHub Pagesにデプロイ
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 1
+        Total : 4
         <!-- search  -->
         </div>
             <div class="site-search popup-trigger">
@@ -568,7 +662,22 @@ GitHub Pagesにデプロイ
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/09</span><a class="archive-post-title" href= "/chira-ura/programming/hello-hexo/" >技術メモはじめました</a>
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/chira-ura/2018/06/12/logon-script-show-window/" >[Windows 10]ログオンスクリプトのコマンドウィンドウの前面表示</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/rails-service-layer/" >[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/chira-ura/2018/06/10/js-single-double-click/" >JavaScript シングル/ダブルクリックイベントを両方取得する</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/09</span><a class="archive-post-title" href= "/chira-ura/2018/06/09/hello-hexo/" >技術メモはじめました</a>
         </li>
     
     </div>
@@ -577,6 +686,18 @@ GitHub Pagesにデプロイ
     <div class="sidebar-tags-name">
     
         <span class="sidebar-tag-name" data-tags="hexo"><span class="iconfont-archer">&#xe606;</span>hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="javascript"><span class="iconfont-archer">&#xe606;</span>javascript</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby"><span class="iconfont-archer">&#xe606;</span>ruby</span>
+    
+        <span class="sidebar-tag-name" data-tags="ruby-on-rails"><span class="iconfont-archer">&#xe606;</span>ruby-on-rails</span>
+    
+        <span class="sidebar-tag-name" data-tags="windows"><span class="iconfont-archer">&#xe606;</span>windows</span>
+    
+        <span class="sidebar-tag-name" data-tags="logon-script"><span class="iconfont-archer">&#xe606;</span>logon-script</span>
+    
+        <span class="sidebar-tag-name" data-tags="cmd"><span class="iconfont-archer">&#xe606;</span>cmd</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

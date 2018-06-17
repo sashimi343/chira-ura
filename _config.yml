@@ -4,8 +4,8 @@
 
 # Site
 title: chira-ura.html
-subtitle: 魚介系エンジニアのメモ書き
-description: プログラミングとかセキュリティとかネットワークとかサーバとかどーでもいい日常とかを綴る予定
+subtitle: プログラミングとかセキュリティとかネットワークとかサーバとかどーでもいい日常とかを綴る予定
+description: 山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。
 keywords: 
 author: Kohei Kakimoto
 language: en
@@ -15,7 +15,7 @@ timezone: Asia/Tokyo
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://sashimi343.github.io/chira-ura
 root: /chira-ura/
-permalink: :category/:title/
+permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
@@ -29,7 +29,7 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :year/:month/:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
@@ -57,6 +57,7 @@ index_generator:
 default_category: misc
 category_map:
 tag_map:
+  - service_layer: サービス層
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -92,6 +93,9 @@ jsonContent:
     excerpt: false
     categories: true
     tags: true
+
+# Disqus  site: https://disqus.com/
+disqus_shortname: sashim1343
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
