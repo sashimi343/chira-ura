@@ -15,7 +15,7 @@
     <meta name="description" content="山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>chira-ura.html</title>
+    <title>Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利 · chira-ura.html</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /chira-ura/css/style.css?v=20180604 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /chira-ura/css/mobile.css?v=20180604 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -192,12 +194,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/chira-ura/" >chira-ura.html</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/chira-ura/>chira-ura.html</a>
 </header>
@@ -211,24 +224,71 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/chira-ura/)"></div>
+    <div class="site-intro-img" style="background-image: url(/chira-ura/background.png)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "chrome">chrome</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "vim">vim</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">422</span> / Reading time: <span class="post-count">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/06/24</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr" style="display: none">&#xe75b;
+                                <div class="share-qrcode" style="display: none"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo" style="display: none">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone" style="display: none">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -330,150 +390,92 @@
 </script>        
         <img class="loading" src="/chira-ura/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/12/logon-script-show-window/" >
-            
-                <span>[Windows 10]ログオンスクリプトのコマンドウィンドウの前面表示</span>
-        </a>
-        <div class="abstract-content">
-            Windows 10のログオンスクリプトでバッチファイル(.bat)を実行する際、実行中のコマンドウィンドウを前面に表示する小ネタ。業務で必要に迫られて実装したので、その内容をメモ。
-グループポリシーで設定できないの？グループポリシー管理エディターの「コンピューターの構成」＞「ポリシー」＞「管理用テンプレート」＞「システム」＞「グループポリシー」＞「実行中のログオン スクリプトの命令を表示する」を「有効」にすればできそうな気がしていました。しかし、実際に設定してみると、コマンドウィンドウは表示されるものの、ウィンドウが最小化された状態になってしまいます。
-ならどうする？STARTコマンド...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "windows">windows</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "logon-script">logon-script</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "cmd">cmd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/10/rails-service-layer/" >
-            
-                <span>[Rails] コンパクトにサービス層を自作・導入する(ジェネレータ付き)</span>
-        </a>
-        <div class="abstract-content">
-            TL;DR
-Railsアプリにサービス層を導入したいんだけど、Trailblazerとか使うほどでもないんだよなぁ、という人（主に自分）向け
-素のRailsアプリに自作サービス層を導入してみた
-ついでにrails generate service hogeみたいなジェネレータも作成してみた
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>普段からVimを使っていると、何でもかんでもVimのキーバインドで操作したくなるのが人間というもの。<br>IDE(Eclipse, Visual Studio等)にVimのキーバインドを取り入れるためのプラグインは比較的有名だが、<br>Webブラウザ(Google Chrome)にもVim風操作を実現するための拡張機能「Vimium」がある。<br>これが割と快適なので、宣伝がてら導入・設定についてメモ。</p>
+<h1 id="導入方法"><a href="#導入方法" class="headerlink" title="導入方法"></a>導入方法</h1><p>Chromeウェブストアで「Vimium」を検索してインストールするだけ。</p>
+<p><a href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?hl=ja" target="_blank" rel="noopener">Vimium - Chrome ウェブストア</a></p>
+<p>見慣れた「V」のアイコンがChromeに追加されたらインストールは完了。<br>特にこだわりがなければこのまま使っても良いが、多少カスタマイズしたほうが使いやすい。<br>設定画面にはVアイコンをクリック→「Options」から入れる。</p>
+<h1 id="個人的Vimiumカスタマイズ例"><a href="#個人的Vimiumカスタマイズ例" class="headerlink" title="個人的Vimiumカスタマイズ例"></a>個人的Vimiumカスタマイズ例</h1><h2 id="Excluded-URLs-and-keys"><a href="#Excluded-URLs-and-keys" class="headerlink" title="Excluded URLs and keys"></a>Excluded URLs and keys</h2><p>Vimキーバインドを使わないページのURLを設定できる。<br>ページにもともとショートカットキーが設定されており、Vimのキーバインドと衝突してしまう場合にはVimiumの対象外サイトに指定する必要がある。<br>私は下記3URLを設定している。</p>
+<ul>
+<li><code>https?://mail.google.com/*</code></li>
+<li><code>https?://calendar.google.com/*</code></li>
+<li><code>https?://tweetdeck.twitter.com/*</code></li>
+</ul>
+<h2 id="Custom-key-mappings"><a href="#Custom-key-mappings" class="headerlink" title="Custom key mappings"></a>Custom key mappings</h2><p>デフォルトのキーマッピングを上書きする設定。<br>マップ可能なコマンドは「Show available commands」から確認可能。<br>以下に私の設定を記載する。<br>デフォルトの設定(やVim本来の操作)から極力逸脱しないようにしている。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Insert your preferred key mappings here.</span><br><span class="line">map h goBack</span><br><span class="line">map l goForward</span><br><span class="line">map H previousTab</span><br><span class="line">map L nextTab</span><br><span class="line">map i LinkHints.activateMode</span><br><span class="line">map I LinkHints.activateModeToOpenInNewTab</span><br><span class="line">map f scrollFullPageDown</span><br><span class="line">map b scrollFullPageUp</span><br></pre></td></tr></table></figure>
+<p>これ以降はAdvanced Optionsのため、「Show Advanced Options」をクリックしないと表示されません。</p>
+<h2 id="Scroll-step-size"><a href="#Scroll-step-size" class="headerlink" title="Scroll step size"></a>Scroll step size</h2><p>j/k等でスクロールする際の移動分。<br>デフォルトだとスクロール幅が小さかったため、80pxと少しだけ大きくしてみた。</p>
+<h2 id="Characters-used-for-link-hints"><a href="#Characters-used-for-link-hints" class="headerlink" title="Characters used for link hints"></a>Characters used for link hints</h2><p>i/I等を押すと、画面内のリンクを選択するモードになるのだが、その際に各リンクに割り当てられるヒント文字の一覧を定義する。<br>Vimのプラグイン<a href="https://github.com/easymotion/vim-easymotion" target="_blank" rel="noopener">vim-easymotion</a>を思い浮かべるとだいたいあってる。<br>文字を増やせば1キーで選択できるリンクが多くなるが、その分打ちづらいキーを押さなければならなくなる。<br>タイプ数の少なさを優先するか、打ちやすさを優先するかは好みで。</p>
+<p>私の設定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hjklasdfgyuiopqwertnmzxcvb</span><br></pre></td></tr></table></figure>
+<p>vim-easymotionと違って、書いた順番で文字の優先順位が決まるわけではなさそう？</p>
+<h1 id="Vimiumを使ってみる"><a href="#Vimiumを使ってみる" class="headerlink" title="Vimiumを使ってみる"></a>Vimiumを使ってみる</h1><p>Vim使いの方であれば特に違和感なく(Vim感覚で)Webブラウザを操作できる。<br>また、i(私の設定では。デフォルトはf)を押すと、リンクを選択するモードになる。</p>
+<p><img src="/chira-ura/assets/images/vimium.png" width="80%" alt="Vimium使用例"></p>
+<p>例えば、この状態で「q」とタイプするとChromeウェブストアに移動できる。</p>
+<h1 id="より詳細な使い方"><a href="#より詳細な使い方" class="headerlink" title="より詳細な使い方"></a>より詳細な使い方</h1><p>このへんを読むと幸せになれるかもしれない。</p>
+<p><a href="https://github.com/philc/vimium/wiki" target="_blank" rel="noopener">Home · philc/vimium Wiki</a></p>
 
-経緯既存のRailsアプリ（APIサーバ）にサービス層を導入しよう！と思い立ったものの、Trailblazer等のgemを導入すると大掛かりな改修が必要になるため、少々敷居が高いと感じました。そこで、既存プロジェクトにgemを追加せず、最低限の機能を持ったコンパクトなサービス層を自作して導入しようと...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby">ruby</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ruby-on-rails">ruby-on-rails</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/10/js-single-double-click/" >
-            
-                <span>JavaScript シングル/ダブルクリックイベントを両方取得する</span>
-        </a>
-        <div class="abstract-content">
-            とあるプログラムを書いているときに、ある要素をシングルクリックしたときの処理と、ダブルクリックしたときの処理を別々にしたいと思いました。それをスマートに実現する方法がなく、自前で実現したのでその方法をメモ。
-onclickとondblclickを両方登録すればいいのでは？それがそうもいかないのです。イベントの発火順序がシングルクリック→ダブルクリックとなっているようです。そのため、両方登録してもシングルクリックの処理しか行われないみたいです。
-ならどうする？そこで、クリックされた状態を保持するフラグを用意し、クリック後一定時間以内に再度クリックした場合、ダブルクリックと判定します。ごちゃ...
+        <div class="license-wrapper">
+            <p>Author: <a href="https://sashimi343.github.io/chira-ura">Kohei Kakimoto</a>
+            <p>URL: <a href="https://sashimi343.github.io/chira-ura/2018/06/24/vimium/">https://sashimi343.github.io/chira-ura/2018/06/24/vimium/</a>
+            <p>Published at: <a href="https://sashimi343.github.io/chira-ura/2018/06/24/vimium/">2018-06-24(Sun) 20:47:49</a>
+            <p>License: Copyright (c) 2018 Kohei Kakimoto</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "javascript">javascript</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/09/hello-hexo/" >
-            
-                <span>技術メモはじめました</span>
-        </a>
-        <div class="abstract-content">
-            技術系ネタのメモ書き場所として、ブログっぽいものを作ってみました。今までは某プログラマの技術情報共有サービスに書いていたのですが、より気軽にポンポン書ける場所が欲しいなーと思い、一念発起してページを立ち上げてみました。
-このサイトの構築についてこのサイトは、Node.js製の静的サイトジェネレータであるHexoとGitHubによる静的サイトホスティングサービスGitHub Pagesを組み合わせて構築しています。サイト公開までの手順はだいたいこんな感じ。
-
-新規hexoプロジェクト作成
-hexoプロジェクト初期設定
-Markdownで記事を書く
-GitHub Pagesにデプロイ
-
-サー...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "hexo">hexo</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/chira-ura/2018/06/17/coffee/" title= コーヒー沼にはまった >
+                    <div class="prevTitle">コーヒー沼にはまった</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+        this.page.url = "https://sashimi343.github.io/chira-ura/2018/06/24/vimium/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://sashim1343.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
+
             <!-- profile -->
             
         </div>
@@ -527,6 +529,24 @@ GitHub Pagesにデプロイ
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#導入方法"><span class="toc-number">1.</span> <span class="toc-text">導入方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#個人的Vimiumカスタマイズ例"><span class="toc-number">2.</span> <span class="toc-text">個人的Vimiumカスタマイズ例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Excluded-URLs-and-keys"><span class="toc-number">2.1.</span> <span class="toc-text">Excluded URLs and keys</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Custom-key-mappings"><span class="toc-number">2.2.</span> <span class="toc-text">Custom key mappings</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scroll-step-size"><span class="toc-number">2.3.</span> <span class="toc-text">Scroll step size</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Characters-used-for-link-hints"><span class="toc-number">2.4.</span> <span class="toc-text">Characters used for link hints</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vimiumを使ってみる"><span class="toc-number">3.</span> <span class="toc-text">Vimiumを使ってみる</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#より詳細な使い方"><span class="toc-number">4.</span> <span class="toc-text">より詳細な使い方</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -740,6 +760,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/chira-ura/scripts/share.js" async></script>    
      
     </body>
 </html>
