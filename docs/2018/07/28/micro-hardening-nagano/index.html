@@ -15,7 +15,7 @@
     <meta name="description" content="山奥の某SIerで業務アプリケーションの開発・運用・保守をしているエンジニアの技術ネタブログです。">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>chira-ura.html</title>
+    <title>Micro Hardening v1.x＠長野に参加してきた · chira-ura.html</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /chira-ura/css/style.css?v=20180604 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /chira-ura/css/mobile.css?v=20180604 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -192,12 +194,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/chira-ura/" >chira-ura.html</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Micro Hardening v1.x＠長野に参加してきた</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/chira-ura/>chira-ura.html</a>
 </header>
@@ -211,24 +224,69 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/chira-ura/)"></div>
+    <div class="site-intro-img" style="background-image: url(/chira-ura/background.png)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Micro Hardening v1.x＠長野に参加してきた
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "micro-hardening">micro-hardening</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">809</span> / Reading time: <span class="post-count">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/07/28</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr" style="display: none">&#xe75b;
+                                <div class="share-qrcode" style="display: none"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo" style="display: none">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone" style="display: none">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -330,44 +388,108 @@
 </script>        
         <img class="loading" src="/chira-ura/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/chira-ura/2018/06/17/coffee/" >
-            
-                <span>コーヒー沼にはまった</span>
-        </a>
-        <div class="abstract-content">
-            もともとコーヒーは好きで、自宅でネスレのバリスタマシンを運用していたが、最近になって本格的にコーヒー沼にはまり始めてきた。バリスタマシンで作るコーヒーの味にそこそこ満足していたにもかかわらず、沼に落ちてしまった経緯をまとめてみた。
-そもそものきっかけきっかけは間違いなくカルディコーヒーで買った水出しコーヒーセットだろう。
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>先週(2018/07/21)に長野で開催された<a href="https://microhardening.connpass.com/event/87874/" target="_blank" rel="noopener">Micro Hardening v1.x＠長野</a>に参加したのでその内容をメモ。</p>
+<h1 id="Micro-Hardeningとは"><a href="#Micro-Hardeningとは" class="headerlink" title="Micro Hardeningとは"></a>Micro Hardeningとは</h1><p><a href="https://microhardening.connpass.com/" target="_blank" rel="noopener">Micro Hardening - commpass</a>より</p>
+<blockquote>
+<p>Micro Hardening は「衛る技術の価値を最大化することを目指す」プロジェクトである<a href="https://microhardening.connpass.com/" target="_blank" rel="noopener">Hardening Project</a>から生まれたサブプロジェクトです。<br>「セキュアなハードニングをカジュアルに競技形式で学ぶ勉強会」である<a href="https://minih.wasforum.jp/" target="_blank" rel="noopener">MINI Hardening Project</a>よりもさらにカジュアルに「ゲーム感覚で」サイバー攻撃に対処する能力を磨くことを目指しています。</p>
+</blockquote>
+<p>この勉強会は、Hardening Projectの川口さんが主催する守りのセキュリティを学ぶ勉強会。<br>参加者は与えられたシステムを数々のサイバー攻撃から守り、サービスの継続（売上の最大化）を図る。<br>本家のHardeningは、サーバ数十台からなる巨大な（というより現実に近い）規模のシステムを半日以上守り続けるハードなものだが、<br>今回参加したMicro Hardeningは、4人1チームでサーバ1台を45分間守るだけというマイルド仕様。<br>しかも本家Hardeningとは異なり、技術以外の要素（経営判断やマスコミ、法対応等）を求められないため、比較的敷居が低い。<br>セキュリティにあまり詳しくないITエンジニアでも気軽に参加できると感じた。</p>
+<p>勉強会は1回45分の演習（サーバの防衛）を3セット繰り返す形で行われる。<br>また、仕掛けられる攻撃は毎回同じもののため、徐々に防衛の精度が上がり、成長を実感できる作りになっている。</p>
+<h1 id="演習の感想"><a href="#演習の感想" class="headerlink" title="演習の感想"></a>演習の感想</h1><p>ネタバレ防止のため、実際の演習内容（どんなインシデントが発生したか）については極力触れないようにしつつ、演習の感想をまとめる。</p>
+<p>演習1回目はそれはもうグダグダだった。<br>原因はいくつもあったが、まとめると情報不足と準備不足の2つに集約できる。</p>
+<ul>
+<li>渡されたサーバ上にどんなサービスが稼働していて、どれが必要なのか分からなかった</li>
+<li>サービスの死活監視や障害発生時の対応手順がまとまっておらず、右往左往した</li>
+<li>バックアップ等が取得されておらず、コンテンツが改ざんされても元に戻せななかった</li>
+<li>障害発生後、原因究明しようとしたが、必要なログが取得されていなかった</li>
+</ul>
+<p>そのため、1回目はひたすら反射神経で障害対応をしていた。<br>場当たり的な対策も多く、力不足を感じた。</p>
+<p>休憩と作戦会議・準備を挟んだ後の2回目では、1回目の反省を活かし下記の対策を実施した。</p>
+<ul>
+<li>演習開始前にサーバを堅牢化（不要サービスの停止・設定変更、FWの設定等）</li>
+<li>正常時のバックアップを取得</li>
+<li>サービスの死活監視体制（誰が何を確認するのか）</li>
+<li>各種サービスのログ取得および監視</li>
+<li>演習前・演習中問わず、サーバに対して行った作業はすべて記録し、復元可能に</li>
+</ul>
+<p>上記を行った結果、1回目とは見違えるほどスマートに対応できた。<br>サーバ堅牢化の結果、サービス停止はほぼ発生せず、<br>わずかながら発生させてしまった障害についても、ログから原因を突き止めることができた。<br>2回目終了時点で、サービス停止に繋がるすべての攻撃を把握し切った。</p>
+<p>そうして迎えた3回目。<br>ここで地味に効いてきたのが作業内容の記録だった。<br>「あれ？堅牢化で何やったっけ？」となりかけたが、実施した作業はすべてメモしてあったため、デグレを発生させずに済んだ。<br>実務でもそうだけど、作業内容はすべて記録して再現・切り戻しを可能にすべきだと再確認。<br>2回目で判明した脆弱性も修正し、万全の体制で演習を開始した。</p>
+<p>3回目はサービス停止も発生せず、ログ監視を続けているだけで45分を乗り切ることができた。<br><del>障害が発生しないと確信できた分、普段の業務時よりも心穏やかだったと思う。</del></p>
+<h1 id="全体を通して"><a href="#全体を通して" class="headerlink" title="全体を通して"></a>全体を通して</h1><p>この勉強会では高度なセキュリティ知識は求められず、むしろ</p>
+<ul>
+<li>サーバ上で稼働しているサービスの種類やバージョンの把握</li>
+<li>ログ監視・解析</li>
+<li>サービス死活監視</li>
+<li>作業内容の記録</li>
+<li>バックアップ等、元に戻すための準備</li>
+<li>パスワード設定、セキュリティパッチ適用等の初歩的なセキュリティ対策</li>
+</ul>
+<p>といったITサービス運用の基礎が要求された。</p>
+<p>実際のサイバー攻撃においても、設定不備等を突いた、ある種初歩的な手段が取られることが圧倒的に多いとのこと。<br>（脆弱なパスワード、不要なポートの開放、不要な機能の使用）<br>これらに対抗するためには、上に記載したような基礎能力を身に着け、それを着実に実行することが大事だと学んだ。<br>セキュリティに派手さはいらない。こういった地味だけど大切なことを漏れなく実施すべきだと。</p>
+<p>Micro Hardeningは専門のセキュリティエンジニア限定の内容ということは決してなく、むしろ普通のIT企業に勤める普通の開発・運用担当者にこそおすすめの勉強会だと思う。</p>
 
-＊カルディオリジナル　水出しコーヒーセット＜水出し珈琲ポットミニ＆アイスブレンド（水出し用細挽き）＞
-コーヒー粉と水を入れて8時間ほど放置するだけで、ご自宅で簡単にアイスコーヒーが作れるスグレモノだ。買い物ついでに寄ったカルディでこんなものを見つけてしまったら、うっか...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "coffee">coffee</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author: <a href="https://sashimi343.github.io/chira-ura">Kohei Kakimoto</a>
+            <p>URL: <a href="https://sashimi343.github.io/chira-ura/2018/07/28/micro-hardening-nagano/">https://sashimi343.github.io/chira-ura/2018/07/28/micro-hardening-nagano/</a>
+            <p>Published at: <a href="https://sashimi343.github.io/chira-ura/2018/07/28/micro-hardening-nagano/">2018-07-28(Sat) 16:47:31</a>
+            <p>License: Copyright (c) 2018 Kohei Kakimoto</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/chira-ura/2018/06/24/vimium/" title= Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利 >
+                    <div class="prevTitle">Webブラウザ上でVimコマンドを使えるようにするChrome拡張「Vimium」が便利</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+        this.page.url = "https://sashimi343.github.io/chira-ura/2018/07/28/micro-hardening-nagano/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "Micro Hardening v1.x＠長野に参加してきた"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://sashim1343.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
+
             <!-- profile -->
             
         </div>
@@ -421,6 +543,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Micro-Hardeningとは"><span class="toc-number">1.</span> <span class="toc-text">Micro Hardeningとは</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#演習の感想"><span class="toc-number">2.</span> <span class="toc-text">演習の感想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#全体を通して"><span class="toc-number">3.</span> <span class="toc-text">全体を通して</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -652,6 +792,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/chira-ura/scripts/share.js" async></script>    
      
     </body>
 </html>
